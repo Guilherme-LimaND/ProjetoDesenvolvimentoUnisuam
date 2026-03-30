@@ -1,0 +1,490 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0E0C0A;
+  --surface: #161310;
+  --card: #1C1815;
+  --gold: #C9A84C;
+  --gold-light: #E2C06A;
+  --gold-dim: #C9A84C22;
+  --cream: #F5EDD8;
+  --muted: #7A7060;
+  --border: #2E2820;
+  --border-gold: #C9A84C55;
+  --red: #8B1A1A;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background-color: var(--bg);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── Painel esquerdo ── */
+
+.panel-left {
+  position: relative;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+}
+
+.stripe-pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 18px,
+    rgba(201, 168, 76, 0.04) 18px,
+    rgba(201, 168, 76, 0.04) 20px
+  );
+  pointer-events: none;
+}
+
+.pole {
+  position: absolute;
+  right: 3.5rem;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  background: #1a1714;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.pole::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--red) 0px,
+    var(--red) 20px,
+    #f5f5f5 20px,
+    #f5f5f5 40px,
+    #1a4fa0 40px,
+    #1a4fa0 60px
+  );
+  opacity: 0.85;
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
+}
+
+.pole-cap {
+  position: absolute;
+  right: 3.5rem;
+  width: 28px;
+  height: 10px;
+  background: var(--gold);
+}
+
+.pole-cap.top    { top: 0; }
+.pole-cap.bottom { bottom: 0; }
+
+.brand {
+  position: relative;
+  z-index: 1;
+}
+
+.brand-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.brand-name span {
+  color: var(--gold);
+}
+
+.brand-since {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.tagline {
+  position: relative;
+  z-index: 1;
+}
+
+.tagline-line {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.tagline p {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--cream);
+  line-height: 1.4;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* ── Painel direito ── */
+
+.panel-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: var(--bg);
+}
+
+.form-wrap {
+  width: 100%;
+  max-width: 380px;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-header {
+  margin-bottom: 2.5rem;
+}
+
+.form-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+}
+
+.divider-gold {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0.75rem 0 0;
+}
+
+.divider-gold span {
+  font-size: 18px;
+  color: var(--gold);
+}
+
+.divider-gold::before,
+.divider-gold::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-gold);
+}
+
+/* ── Formulário ── */
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.forgot {
+  font-size: 11px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.forgot:hover {
+  opacity: 0.7;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input::placeholder {
+  color: #3D3830;
+}
+
+input:hover {
+  border-color: #3D3830;
+}
+
+input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  margin-top: 0.25rem;
+  background: var(--gold);
+  color: #0E0C0A;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+  background: var(--gold-light);
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+.sep {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1.5rem 0;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sep::before,
+.sep::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.signup {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.signup a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.signup a:hover {
+  opacity: 0.7;
+}
+
+/* ── Responsivo ── */
+
+@media (max-width: 700px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-left {
+    display: none;
+  }
+}
+
+/* ── Telas (navegação JS) ── */
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+  animation: fadeUp 0.35s ease both;
+}
+
+/* ── Inputs extras ── */
+
+input[type="text"],
+input[type="tel"] {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]::placeholder,
+input[type="tel"]::placeholder {
+  color: #3D3830;
+}
+
+input[type="text"]:hover,
+input[type="tel"]:hover {
+  border-color: #3D3830;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+/* ── Mostrar/ocultar senha ── */
+
+.input-eye {
+  position: relative;
+}
+
+.input-eye input {
+  padding-right: 44px;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  color: var(--muted);
+  transition: opacity 0.15s;
+}
+
+.eye-btn:hover {
+  opacity: 0.7;
+}
+
+/* ── Erros de campo ── */
+
+.field-error {
+  display: block;
+  font-size: 11px;
+  color: #C84040;
+  margin-top: 5px;
+  min-height: 14px;
+}
+
+/* ── Caixa de feedback geral ── */
+
+.feedback-box {
+  font-size: 13px;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s;
+}
+
+.feedback-box:not(:empty) {
+  padding: 10px 14px;
+}
+
+.feedback-box.error {
+  background: #2A1010;
+  color: #E07070;
+  border: 1px solid #5A2020;
+}
+
+.feedback-box.success {
+  background: #0F2A10;
+  color: #70C070;
+  border: 1px solid #205A20;
+}
+
+/* ── Força da senha ── */
+
+.strength-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.strength-label {
+  display: block;
+  font-size: 11px;
+  margin-top: 4px;
+  min-height: 14px;
+  font-weight: 500;
+}
+
+/* ── Descrição de tela ── */
+
+.screen-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
