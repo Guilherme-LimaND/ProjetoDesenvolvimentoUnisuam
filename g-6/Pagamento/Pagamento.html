@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Blade — Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pagamento.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-tag">Barbearia</span>
+        <span class="header-name">THE <strong>BLADE</strong></span>
+      </div>
+      <nav class="header-nav">
+        <a href="login.html">Login</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="#" class="active">Pagamento</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="checkout-main">
+
+    <!-- Coluna esquerda: resumo do pedido -->
+    <aside class="order-summary">
+      <p class="summary-eyebrow">Resumo do pedido</p>
+      <h2 class="summary-title">The Blade</h2>
+      <div class="summary-divider"></div>
+
+      <div class="summary-items" id="summary-items">
+        <!-- Preenchido pelo JS via URL params -->
+      </div>
+
+      <div class="summary-total-row">
+        <span>Total</span>
+        <span id="summary-total" class="summary-total-value">R$ 0</span>
+      </div>
+
+      <div class="summary-info">
+        <div class="info-row"><span class="info-icon">📍</span><span>Rio de Janeiro, RJ</span></div>
+        <div class="info-row"><span class="info-icon">📞</span><span>(21) 99999-9999</span></div>
+        <div class="info-row"><span class="info-icon">🕐</span><span>Seg–Sáb, 9h às 20h</span></div>
+      </div>
+    </aside>
+
+    <!-- Coluna direita: formulário de pagamento -->
+    <section class="payment-section">
+
+      <!-- Passo 1: Quando pagar -->
+      <div class="step" id="step-when">
+        <p class="step-eyebrow">Passo 1 de 3</p>
+        <h2 class="step-title">Quando deseja pagar?</h2>
+        <div class="when-grid">
+          <button class="when-card" id="btn-pay-now">
+            <span class="when-icon">💳</span>
+            <span class="when-label">Pagar agora</span>
+            <span class="when-desc">Online, antes do atendimento</span>
+          </button>
+          <button class="when-card" id="btn-pay-later">
+            <span class="when-icon">🏪</span>
+            <span class="when-label">Pagar na barbearia</span>
+            <span class="when-desc">Presencialmente, no dia</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Passo 2a: Método de pagamento (online) -->
+      <div class="step hidden" id="step-method">
+        <p class="step-eyebrow">Passo 2 de 3</p>
+        <h2 class="step-title">Forma de pagamento</h2>
+        <div class="method-tabs">
+          <button class="method-tab active" data-method="pix">PIX</button>
+          <button class="method-tab" data-method="credito">Crédito</button>
+          <button class="method-tab" data-method="debito">Débito</button>
+        </div>
+
+        <!-- PIX -->
+        <div class="method-panel active" id="panel-pix">
+          <div class="pix-wrap">
+            <div class="qrcode-box">
+              <div class="qrcode-inner" id="qrcode-placeholder">
+                <div class="qr-grid"></div>
+              </div>
+              <p class="qr-label">QR Code PIX</p>
+            </div>
+            <div class="pix-details">
+              <p class="pix-instructions">Abra o app do seu banco, escolha <strong>Pagar via PIX</strong> e escaneie o QR Code ao lado, ou copie a chave abaixo.</p>
+              <div class="pix-key-box">
+                <span class="pix-key-label">Chave PIX (CNPJ)</span>
+                <div class="pix-key-row">
+                  <span class="pix-key-value" id="pix-key">12.345.678/0001-99</span>
+                  <button class="btn-copy" id="btn-copy-pix">Copiar</button>
+                </div>
+              </div>
+              <div class="pix-timer">
+                <span class="timer-label">Expira em</span>
+                <span class="timer-value" id="pix-timer">10:00</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-confirm" id="btn-confirm-pix">Já realizei o pagamento</button>
+        </div>
+
+        <!-- Cartão de Crédito -->
+        <div class="method-panel hidden" id="panel-credito">
+          <div class="card-visual" id="card-visual-credito">
+            <div class="card-chip"></div>
+            <p class="card-number" id="display-num-credito">•••• •••• •••• ••••</p>
+            <div class="card-bottom">
+              <div><p class="card-field-label">Titular</p><p class="card-field-val" id="display-nome-credito">SEU NOME</p></div>
+              <div><p class="card-field-label">Validade</p><p class="card-field-val" id="display-val-credito">MM/AA</p></div>
+            </div>
+          </div>
+          <form id="form-credito" novalidate>
+            <div class="field">
+              <label for="cred-numero">Número do cartão</label>
+              <input type="text" id="cred-numero" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
+              <span class="field-error" id="err-cred-numero"></span>
+            </div>
+            <div class="field">
+              <label for="cred-nome">Nome no cartão</label>
+              <input type="text" id="cred-nome" placeholder="NOME SOBRENOME" autocomplete="cc-name">
+              <span class="field-error" id="err-cred-nome"></span>
+            </div>
+            <div class="field-row-2">
+              <div class="field">
+                <label for="cred-validade">Validade</label>
+                <input type="text" id="cred-validade" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+                <span class="field-error" id="err-cred-validade"></span>
+              </div>
+              <div class="field">
+                <label for="cred-cvv">CVV</label>
+                <input type="text" id="cred-cvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+                <span class="field-error" id="err-cred-cvv"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="cred-parcelas">Parcelamento</label>
+              <select id="cred-parcelas"></select>
+            </div>
+            <div class="feedback-box" id="fb-credito"></div>
+            <button type="submit" class="btn-confirm">Pagar com crédito</button>
+          </form>
+        </div>
+
+        <!-- Cartão de Débito -->
+        <div class="method-panel hidden" id="panel-debito">
+          <div class="card-visual card-visual-debit" id="card-visual-debito">
+            <div class="card-chip"></div>
+            <p class="card-number" id="display-num-debito">•••• •••• •••• ••••</p>
+            <div class="card-bottom">
+              <div><p class="card-field-label">Titular</p><p class="card-field-val" id="display-nome-debito">SEU NOME</p></div>
+              <div><p class="card-field-label">Validade</p><p class="card-field-val" id="display-val-debito">MM/AA</p></div>
+            </div>
+          </div>
+          <form id="form-debito" novalidate>
+            <div class="field">
+              <label for="deb-numero">Número do cartão</label>
+              <input type="text" id="deb-numero" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
+              <span class="field-error" id="err-deb-numero"></span>
+            </div>
+            <div class="field">
+              <label for="deb-nome">Nome no cartão</label>
+              <input type="text" id="deb-nome" placeholder="NOME SOBRENOME" autocomplete="cc-name">
+              <span class="field-error" id="err-deb-nome"></span>
+            </div>
+            <div class="field-row-2">
+              <div class="field">
+                <label for="deb-validade">Validade</label>
+                <input type="text" id="deb-validade" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+                <span class="field-error" id="err-deb-validade"></span>
+              </div>
+              <div class="field">
+                <label for="deb-cvv">CVV</label>
+                <input type="text" id="deb-cvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+                <span class="field-error" id="err-deb-cvv"></span>
+              </div>
+            </div>
+            <div class="feedback-box" id="fb-debito"></div>
+            <button type="submit" class="btn-confirm">Pagar com débito</button>
+          </form>
+        </div>
+
+        <button class="btn-back" id="btn-back-method">← Voltar</button>
+      </div>
+
+      <!-- Passo 2b: Pagar na barbearia -->
+      <div class="step hidden" id="step-presencial">
+        <p class="step-eyebrow">Passo 2 de 3</p>
+        <h2 class="step-title">Pagamento presencial</h2>
+        <p class="step-desc">Ótimo! Você pagará diretamente na barbearia no dia do atendimento. Aceitamos as seguintes formas:</p>
+        <div class="presencial-methods">
+          <div class="pres-method"><span>💵</span> Dinheiro</div>
+          <div class="pres-method"><span>💳</span> Cartão de débito</div>
+          <div class="pres-method"><span>💳</span> Cartão de crédito</div>
+          <div class="pres-method"><span>📱</span> PIX na hora</div>
+        </div>
+        <div class="presencial-notice">
+          <span class="notice-icon">⚠</span>
+          <p>Ao confirmar, seu horário ficará reservado. O não comparecimento sem cancelamento prévio de 2h pode resultar em cobrança de taxa.</p>
+        </div>
+        <button class="btn-confirm" id="btn-confirm-presencial">Confirmar agendamento</button>
+        <button class="btn-back" id="btn-back-presencial">← Voltar</button>
+      </div>
+
+      <!-- Passo 3: Confirmação -->
+      <div class="step hidden" id="step-confirmation">
+        <div class="confirm-icon">✔</div>
+        <p class="step-eyebrow">Tudo certo!</p>
+        <h2 class="step-title" id="confirm-title">Pagamento confirmado</h2>
+        <p class="confirm-desc" id="confirm-desc">Seu agendamento está garantido. Você receberá uma confirmação por e-mail em breve.</p>
+        <div class="confirm-details" id="confirm-details"></div>
+        <a href="servicos.html" class="btn-confirm" style="text-decoration:none; text-align:center; display:block;">Voltar aos serviços</a>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="pagamento.js"></script>
+</body>
+</html>
