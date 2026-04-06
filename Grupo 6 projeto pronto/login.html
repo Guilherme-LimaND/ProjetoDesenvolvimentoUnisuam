@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Blade — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="panel-left">
+    <div class="stripe-pattern"></div>
+    <div class="pole"></div>
+    <div class="pole-cap top"></div>
+    <div class="pole-cap bottom"></div>
+    <div class="brand">
+      <p class="brand-tag">Barbearia</p>
+      <h1 class="brand-name">THE<br><span>BLADE</span></h1>
+      <p class="brand-since">Est. 2010 &mdash; Rio de Janeiro</p>
+    </div>
+    <div class="tagline">
+      <div class="tagline-line"></div>
+      <p>"O corte certo<br>muda tudo."</p>
+    </div>
+  </div>
+
+  <div class="panel-right">
+    <div class="form-wrap">
+
+      <!-- TELA: LOGIN -->
+      <div id="screen-login" class="screen active">
+        <div class="form-header">
+          <p class="form-eyebrow">Área do cliente</p>
+          <h2 class="form-title">Acesse sua conta</h2>
+          <div class="divider-gold"><span>✦</span></div>
+        </div>
+        <form id="form-login" novalidate>
+          <div class="field">
+            <label for="login-email">E-mail</label>
+            <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email" required>
+            <span class="field-error" id="err-login-email"></span>
+          </div>
+          <div class="field">
+            <div class="field-row">
+              <label for="login-senha">Senha</label>
+              <a href="#" class="forgot" id="link-forgot">Esqueceu a senha?</a>
+            </div>
+            <div class="input-eye">
+              <input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="eye-btn" data-target="login-senha">👁</button>
+            </div>
+            <span class="field-error" id="err-login-senha"></span>
+          </div>
+          <div class="feedback-box" id="fb-login"></div>
+          <button type="submit">Entrar</button>
+        </form>
+        <div class="sep">ou</div>
+        <p class="signup">Novo por aqui? <a href="#" id="link-register">Crie sua conta</a></p>
+      </div>
+
+      <!-- TELA: CRIAR CONTA -->
+      <div id="screen-register" class="screen">
+        <div class="form-header">
+          <p class="form-eyebrow">Novo cliente</p>
+          <h2 class="form-title">Crie sua conta</h2>
+          <div class="divider-gold"><span>✦</span></div>
+        </div>
+        <form id="form-register" novalidate>
+          <div class="field">
+            <label for="reg-nome">Nome completo</label>
+            <input type="text" id="reg-nome" placeholder="João da Silva" autocomplete="name" required>
+            <span class="field-error" id="err-reg-nome"></span>
+          </div>
+          <div class="field">
+            <label for="reg-email">E-mail</label>
+            <input type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email" required>
+            <span class="field-error" id="err-reg-email"></span>
+          </div>
+          <div class="field">
+            <label for="reg-telefone">Telefone</label>
+            <input type="tel" id="reg-telefone" placeholder="(21) 99999-9999" autocomplete="tel">
+            <span class="field-error" id="err-reg-telefone"></span>
+          </div>
+          <div class="field">
+            <label for="reg-senha">Senha</label>
+            <div class="input-eye">
+              <input type="password" id="reg-senha" placeholder="Mín. 8 caracteres" required>
+              <button type="button" class="eye-btn" data-target="reg-senha">👁</button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-label" id="strength-label"></span>
+            <span class="field-error" id="err-reg-senha"></span>
+          </div>
+          <div class="field">
+            <label for="reg-confirma">Confirmar senha</label>
+            <div class="input-eye">
+              <input type="password" id="reg-confirma" placeholder="Repita a senha" required>
+              <button type="button" class="eye-btn" data-target="reg-confirma">👁</button>
+            </div>
+            <span class="field-error" id="err-reg-confirma"></span>
+          </div>
+          <div class="feedback-box" id="fb-register"></div>
+          <button type="submit">Criar conta</button>
+        </form>
+        <div class="sep">ou</div>
+        <p class="signup">Já tem conta? <a href="#" id="link-login">Entrar</a></p>
+      </div>
+
+      <!-- TELA: ESQUECEU A SENHA -->
+      <div id="screen-forgot" class="screen">
+        <div class="form-header">
+          <p class="form-eyebrow">Recuperar acesso</p>
+          <h2 class="form-title">Redefinir senha</h2>
+          <div class="divider-gold"><span>✦</span></div>
+        </div>
+        <form id="form-forgot" novalidate>
+          <p class="screen-desc">Informe o e-mail cadastrado e enviaremos um link para redefinir sua senha.</p>
+          <div class="field">
+            <label for="forgot-email">E-mail</label>
+            <input type="email" id="forgot-email" placeholder="seu@email.com" autocomplete="email" required>
+            <span class="field-error" id="err-forgot-email"></span>
+          </div>
+          <div class="feedback-box" id="fb-forgot"></div>
+          <button type="submit">Enviar link</button>
+        </form>
+        <div class="sep">ou</div>
+        <p class="signup">Lembrou a senha? <a href="#" id="link-back-login">Voltar ao login</a></p>
+      </div>
+
+    </div>
+  </div>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
