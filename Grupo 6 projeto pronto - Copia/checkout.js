@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
   itemsEl.appendChild(row);
   document.getElementById('summary-total').textContent = 'R$ ' + total;
 
+  // Inicia no passo de agendamento
+  showStep('step-schedule');
+
   // Preenche parcelamento (crédito)
   var sel = document.getElementById('cred-parcelas');
   for (var i = 1; i <= 3; i++) {
@@ -68,7 +71,88 @@ document.addEventListener('DOMContentLoaded', function () {
     el.textContent = msg; el.className = 'feedback-box ' + (type || '');
   }
 
+
+  // ── AGENDAMENTO: Datas e horários ─────────────────────────────────────────
+
+  var HORARIOS = ['09:00','09:30','10:00','10:30','11:00','11:30',
+                  '13:00','13:30','14:00','14:30','15:00','15:30',
+                  '16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
+
+  // Horários já ocupados (simulado — em produção viria do backend)
+  var OCUPADOS = {'09:00':true, '11:00':true, '14:30':true, '17:00':true};
+
+  var selectedDate = null;
+  var selectedTime = null;
+
+  // Gera os proximos 21 dias corridos (exceto domingo)
+  var datesGrid = document.getElementById('dates-grid');
+  var weekdays = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
+  var months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  var today = new Date();
+  today.setHours(0,0,0,0);
+
+  for (var d = 1; d <= 30; d++) {
+    var date = new Date(today.getTime());
+    date.setDate(today.getDate() + d);
+    if (date.getDay() === 0) continue; // pula domingo
+    (function(dt) {
+      var btn = document.createElement('button');
+      btn.className = 'date-btn';
+      btn.innerHTML =
+        '<span class="date-weekday">' + weekdays[dt.getDay()] + '</span>' +
+        '<span class="date-day">' + dt.getDate() + '</span>' +
+        '<span class="date-weekday">' + months[dt.getMonth()] + '</span>';
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.date-btn').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selectedDate = dt;
+        selectedTime = null;
+        renderTimes();
+        document.getElementById('times-section').style.display = 'block';
+      });
+      datesGrid.appendChild(btn);
+    })(date);
+  }
+
+  function renderTimes() {
+    var grid = document.getElementById('times-grid');
+    grid.innerHTML = '';
+    HORARIOS.forEach(function(h) {
+      var btn = document.createElement('button');
+      btn.className = 'time-btn';
+      btn.textContent = h;
+      if (OCUPADOS[h]) {
+        btn.disabled = true;
+        btn.title = 'Horario indisponivel';
+      } else {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.time-btn').forEach(function(b){ b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          selectedTime = h;
+          document.getElementById('fb-schedule').textContent = '';
+        });
+      }
+      grid.appendChild(btn);
+    });
+  }
+
+  // Confirmar agendamento
+  document.getElementById('btn-confirm-schedule').addEventListener('click', function () {
+    if (!selectedDate) {
+      document.getElementById('fb-schedule').textContent = 'Selecione uma data.';
+      document.getElementById('fb-schedule').className = 'feedback-box error';
+      return;
+    }
+    if (!selectedTime) {
+      document.getElementById('fb-schedule').textContent = 'Selecione um horario.';
+      document.getElementById('fb-schedule').className = 'feedback-box error';
+      return;
+    }
+    showStep('step-when');
+  });
+
   // ── PASSO 1: Quando pagar ─────────────────────────────────────────────────
+
   document.getElementById('btn-pay-now').addEventListener('click', function () {
     showStep('step-method');
     startPixTimer();
@@ -234,7 +318,9 @@ document.addEventListener('DOMContentLoaded', function () {
       : 'Agendamento garantido! Você receberá a confirmação por e-mail em breve.';
 
     var now     = new Date();
-    var dateStr = now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
+    var dateStr = selectedDate
+      ? selectedDate.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' }) + (selectedTime ? ' às ' + selectedTime : '')
+      : now.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long' });
     var codigo  = '#BLD-' + Math.floor(10000 + Math.random() * 90000);
 
     // Salva no localStorage se tiver Auth disponível

@@ -52,9 +52,28 @@
     <!-- Coluna direita: formulário de pagamento -->
     <section class="payment-section">
 
+      <!-- Passo 1: Escolher data e horário -->
+      <div class="step" id="step-schedule">
+        <p class="step-eyebrow">Passo 1 de 4</p>
+        <h2 class="step-title">Escolha data e horário</h2>
+
+        <div class="schedule-section">
+          <p class="schedule-label">Data</p>
+          <div class="dates-grid" id="dates-grid"></div>
+        </div>
+
+        <div class="schedule-section" id="times-section" style="display:none">
+          <p class="schedule-label">Horário disponível</p>
+          <div class="times-grid" id="times-grid"></div>
+        </div>
+
+        <div class="feedback-box" id="fb-schedule"></div>
+        <button class="btn-confirm" id="btn-confirm-schedule" style="margin-top:1rem">Confirmar horário →</button>
+      </div>
+
       <!-- Passo 1: Quando pagar -->
       <div class="step" id="step-when">
-        <p class="step-eyebrow">Passo 1 de 3</p>
+        <p class="step-eyebrow">Passo 2 de 4</p>
         <h2 class="step-title">Quando deseja pagar?</h2>
         <div class="when-grid">
           <button class="when-card" id="btn-pay-now">
@@ -72,7 +91,7 @@
 
       <!-- Passo 2a: Método de pagamento (online) -->
       <div class="step hidden" id="step-method">
-        <p class="step-eyebrow">Passo 2 de 3</p>
+        <p class="step-eyebrow">Passo 3 de 4</p>
         <h2 class="step-title">Forma de pagamento</h2>
         <div class="method-tabs">
           <button class="method-tab active" data-method="pix">PIX</button>
@@ -192,7 +211,7 @@
 
       <!-- Passo 2b: Pagar na barbearia -->
       <div class="step hidden" id="step-presencial">
-        <p class="step-eyebrow">Passo 2 de 3</p>
+        <p class="step-eyebrow">Passo 3 de 4</p>
         <h2 class="step-title">Pagamento presencial</h2>
         <p class="step-desc">Ótimo! Você pagará diretamente na barbearia no dia do atendimento. Aceitamos as seguintes formas:</p>
         <div class="presencial-methods">

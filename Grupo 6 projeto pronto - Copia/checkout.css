@@ -343,3 +343,130 @@ select option { background: var(--card); }
   .field-row-2 { grid-template-columns: 1fr; }
   .header-nav { display: none; }
 }
+
+/* ── Agendamento ── */
+
+.schedule-section {
+  margin-bottom: 1.75rem;
+}
+
+.schedule-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.dates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 8px;
+}
+
+.date-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.date-btn:hover:not(:disabled) {
+  border-color: var(--border-gold);
+  background: var(--card-hover);
+}
+
+.date-btn.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.date-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.date-weekday {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.date-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.date-btn.selected .date-weekday { color: var(--gold); }
+.date-btn.selected .date-day     { color: var(--gold); }
+
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 8px;
+}
+
+.time-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 6px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.time-btn:hover:not(:disabled) {
+  border-color: var(--border-gold);
+  background: var(--card-hover);
+}
+
+.time-btn.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.time-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.selected-schedule-info {
+  background: var(--card);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selected-schedule-info span { color: var(--gold); font-weight: 600; }
+
+@media (max-width: 750px) {
+  .dates-grid { grid-template-columns: repeat(4, 1fr); }
+  .times-grid { grid-template-columns: repeat(3, 1fr); }
+}
